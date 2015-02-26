@@ -11,6 +11,12 @@
 
 
 (extend-type midje.data.metaconstant.Metaconstant
+  Validatable
+  (validate [this] :unifinished)
+  (supressed [this] :unifinished))
+
+
+(extend-type midje.data.metaconstant.Metaconstant
   Rule
   (applies? [rule resource] :unifinished)
   (problems? [rule resource] :unifinished)
@@ -39,17 +45,7 @@
                           ...rule2...) :resource) => (just [...rule1...])
              (provided
               (applies? ...rule1... :resource) => true
-              (applies? ...rule2... :resource) => false))
-
-
-       (fact "it does not return supressed rules"
-             (find-rules (ruleset
-                          ...rule1...
-                          ...rule2...) :resource) => (just [...rule1...])
-             (provided
-              (id ...rule1...) => :rule1
-              (id ...rule2...) => :rule2
-              (supressed :resource) => #{:rule2})))
+              (applies? ...rule2... :resource) => false)))
 
 
 (facts "about rule"
@@ -60,7 +56,24 @@
        (fact "it returns an empty vector for resource with no problems"
              (problems?
               (rule "example" :validator (constantly true))
-              ...resource...) => []))
+              ...resource...) => [])
+       (fact "it applies allways by default"
+             (applies? (rule "example" :validator (constantly true))
+              ...resource...) => true)
+       (fact "it retuns true for applicable resource when checking applicability"
+             (applies?
+              (rule "example" :applies (partial = ...resource...) :validator (constantly false))
+              ...resource...) => true)
+       (fact "it returns false for unapplicable resource when checking applicability"
+             (applies?
+              (rule "example" :applies (partial = ...resource...) :validator (constantly false))
+              ...resource2...) => false)
+       (fact "it returns false for resource which supresses it when checking applicability"
+             (applies?
+              (rule "example" :applies (partial = ...resource...) :validator (constantly false))
+              ...resource...) => false
+             (provided
+              (supressed ...resource...) => #{"example"})))
 
 
 

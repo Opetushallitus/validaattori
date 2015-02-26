@@ -18,7 +18,10 @@
 
 (extend-type clojure.lang.IPersistentMap
   Rule
-  (applies? [this resource] ((this :applies) resource))
+  (applies? [this resource] (and
+                             ((this :applies) resource)
+                             (not ((supressed resource) (id this)))))
+
   (problems? [this resource] (if
                                ((this :validator) resource)
                                []
@@ -29,9 +32,7 @@
 (defn ruleset [& rules]
   (fn [r]
       (filter
-              #(and
-                (applies? %1 r)
-                (not ((supressed r) (id %1))))
+              #(applies? %1 r)
               rules)))
 
 (defn rule [name & {:keys [applies validator] :or {applies (constantly true)}}]
