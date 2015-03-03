@@ -11,6 +11,7 @@
                                  [lein-cljsbuild "1.0.5"]
                                  [com.birdseye-sw/lein-dalap "0.1.0"]]
                        :dependencies [[midje "1.6.3"]]}}
+  :hooks [leiningen.dalap]
   :cljsbuild {
     :builds [{
         ; The path to the top-level ClojureScript source directory:
