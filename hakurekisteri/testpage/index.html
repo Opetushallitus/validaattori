@@ -28,15 +28,33 @@
           })
         })
 
+        function pad(n, p, c) {
+            var pad_char = typeof c !== 'undefined' ? c : '0';
+            var padding = new Array(1 + p).join(pad_char);
+            return (padding + n).slice(-padding.length);
+        }
+
+        function time() {
+            var d = new Date()
+            return pad(d.getHours(), 2) + ":" +pad(d.getMinutes(),2) + ":" + pad(d.getSeconds(),2) + "." + pad(d.getMilliseconds(),3)
+        }
+
         function validoiXmlTodistus(xml) {
+            console.log("start: " + time())
           var parser=new DOMParser();
+
           xmlDoc=parser.parseFromString(xml,"text/xml");
+                        console.log("parsed: " + time())
+
 
           console.log(xmlDoc)
 
           todistukset = haeTodistukset(xmlDoc)
+                                  console.log("objects created: " + time())
+
 
           var result = todistukset.flatMap( hakurekisteri.perusopetus.validateTodistus )
+                                    console.log("validation done: " + time())
 
           console.log(result)
 
