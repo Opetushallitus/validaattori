@@ -12,28 +12,28 @@
   (id [rule] "id of the rule")
   (message [rule resource] "compose a message for problematic resource"))
 
-(extend-type clojure.lang.IFn
+(defrecord RulesetData [rules]
   Ruleset
-  (find-rules [this resource] (this resource)))
+  (find-rules [this resource]
+              (filter
+               #(applies? %1 resource)
+               (:rules this))))
 
-(extend-type clojure.lang.IPersistentMap
+(defrecord RuleData [id applies validator]
   Rule
   (applies? [this resource] (and
-                             ((this :applies) resource)
-                             (not ((supressed resource) (id this)))))
+                             ((:applies this) resource)
+                             (not ((supressed resource) (:id this)))))
 
   (problems? [this resource] (if
-                               ((this :validator) resource)
+                               ((:validator this) resource)
                                []
                                [(message this resource)]))
   (id [this] (:id this))
-  (message [this resource] (str resource " failed rule " (id this))))
+  (message [this resource] (str resource " failed rule " (:id this))))
 
 (defn ruleset [& rules]
-  (fn [r]
-      (filter
-              #(applies? %1 r)
-              rules)))
+  (RulesetData. rules))
 
 (defn rule [name & {:keys [applies validator] :or {applies (constantly true)}}]
-  {:id name :applies applies :validator validator})
+  (map->RuleData {:id name :applies applies :validator validator}))
