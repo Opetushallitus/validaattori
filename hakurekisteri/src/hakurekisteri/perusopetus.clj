@@ -19,7 +19,7 @@
 
 (defn mandatory [s]
   (fn [t] (some
-           #(= s (:aine %1))
+           (every-pred #(= s (:aine %1)) #(not (:valinnainen %1)))
            (:arvosanat t))))
 
 (defn mandatory-perusopetus-subject [s]
@@ -41,12 +41,18 @@
             (mapcat #(problems? %1 this) (find-rules perusopetus this)))
   (supressed [this] (:supressed this)))
 
-(defrecord Arvosana [aine arvio lisatieto])
+(defrecord Arvosana [aine arvio lisatieto valinnainen])
 
 (defrecord Suoritus [komo tila])
 
 (defn arvosana [o]
-  (->Arvosana (.aine o) (.arvosana (.arvio o)) (.lisatieto o)))
+  (->Arvosana
+   (.aine o)
+   (.arvosana (.arvio o))
+   (.lisatieto o)
+   (if-let [valinnaisuus (.valinnainen o)]
+     valinnaisuus
+     false)))
 
 
 (defn suoritus [o]

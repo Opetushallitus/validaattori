@@ -9,4 +9,5 @@
                                                                                              '.aine '.-aine
                                                                                              '.lisatieto '.-lisatieto
                                                                                              '.komo '.-komo
-                                                                                             '.tila '.-tila]}
+                                                                                             '.tila '.-tila
+                                                                                             '.valinnainen '.-valinnainen]}
