@@ -17,23 +17,42 @@
    (not-failed? t)))
 
 
+(defn perusopetus-rule [name & {:keys [applies validator]}]
+  (rule name
+         :applies (if-let [added-filter applies]
+                    (every-pred added-filter not-failed-perusopetus?)
+                    not-failed-perusopetus?)
+         :validator validator))
+
 (defn mandatory [s]
   (fn [t] (some
            (every-pred #(= s (:aine %1)) #(not (:valinnainen %1)))
            (:arvosanat t))))
 
 (defn mandatory-perusopetus-subject [s]
-  (rule (keyword (str "mandatory-" (lower-case s)))
-         :applies not-failed-perusopetus?
+  (perusopetus-rule (keyword (str "mandatory-" (lower-case s)))
          :validator (mandatory s)))
+
+
 
 
 (def mandatory-subjects #{"TE" "KO" "BI" "MU" "LI" "A1" "KT" "GE" "KU" "B1" "KE" "MA" "FY" "KS" "YH" "HI" "AI"})
 
+(defn by-subject [as]
+  (group-by :aine as))
 
+(def no-valinnainen-without-yleinen
+  (perusopetus-rule :no-valinnainen-without-yleinen
+        :validator (fn [{:keys [arvosanat]}]
+                     (not-any?
+                      (fn [[subject arvosanat]]
+                        (every? :valinnainen arvosanat))
+                      (by-subject arvosanat)))))
 
 (def perusopetus
-  (apply ruleset (map mandatory-perusopetus-subject mandatory-subjects)))
+  (apply ruleset (cons
+                  no-valinnainen-without-yleinen
+                  (map mandatory-perusopetus-subject mandatory-subjects))))
 
 (defrecord Todistus [suoritus arvosanat supressed]
   Validatable
