@@ -58,8 +58,9 @@
               (rule "example" :validator (constantly true))
               ...resource...) => [])
        (fact "it applies allways by default"
-             (applies? (rule "example" :validator (constantly true))
-              ...resource...) => true)
+             (applies? 
+               (rule "example" :validator (constantly true))
+               ...resource...) => true)
        (fact "it retuns true for applicable resource when checking applicability"
              (applies?
               (rule "example" :applies (partial = ...resource...) :validator (constantly false))
