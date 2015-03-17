@@ -30,7 +30,7 @@
                                []
                                [(message this resource)]))
   (id [this] (:id this))
-  (message [this resource] (str resource " failed rule " (:id this))))
+  (message [this resource] [resource this]))
 
 (defn ruleset [& rules]
   (RulesetData. rules))

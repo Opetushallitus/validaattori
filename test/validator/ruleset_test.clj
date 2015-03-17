@@ -49,16 +49,16 @@
 
 
 (facts "about rule"
-       (fact "it returns a message problem resource"
+       (fact "it returns the a sequence with problem resource and the failed rule"
              (problems?
               (rule "example" :validator (constantly false))
-              ...resource...) => (contains ["...resource... failed rule example"]))
+              ...resource...) => (contains [(just [...resource... (contains {:id "example"})])] ))
        (fact "it returns an empty vector for resource with no problems"
              (problems?
               (rule "example" :validator (constantly true))
               ...resource...) => [])
        (fact "it applies allways by default"
-             (applies? 
+             (applies?
                (rule "example" :validator (constantly true))
                ...resource...) => true)
        (fact "it retuns true for applicable resource when checking applicability"
