@@ -26,7 +26,7 @@
                                                                     :optimizations :whitespace
                                                                     :pretty-print true}
                                                          }]}}}
-  :hooks [leiningen.dalap leiningen.cljsbuild]
+  :hooks [leiningen.dalap]
   :cljsbuild {
     :builds [{
         ; The path to the top-level ClojureScript source directory:
