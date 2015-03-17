@@ -6,12 +6,12 @@
       <div id="result"></div>
       <script type="text/javascript" src="../../target/javascripts/hakurekisteri-validator.js"></script>
       <script>
-        fileupload.addEventListener("change", function() { 
+        fileupload.addEventListener("change", function() {
           var file = fileupload.files[0]
           reader = new FileReader()
           reader.readAsText(file)
           reader.addEventListener("loadend", function() {
-            validoiXmlTodistus(reader.result) 
+            validoiXmlTodistus(reader.result)
           })
         })
 
@@ -23,20 +23,20 @@
 
           todistukset = haeTodistukset(xmlDoc)
 
-          var result = todistukset.flatMap( hakurekisteri.perusopetus.validateTodistus ) 
+          var result = todistukset.flatMap( hakurekisteri.perusopetus.validateTodistus )
 
           console.log(result)
 
-          document.getElementById("result").textContent = result
+          document.getElementById("result").textContent = JSON.stringify(result)
         }
 
         function haeTodistukset(xmlDoc) {
           return xmlSelect(xmlDoc, "perusopetus")
             .map(function(todistusEl) {
               return {
-                suoritus: { komo: "1.2.246.562.13.62959769647" }, 
-                arvosanas: haeArvosanat(todistusEl), 
-                supressed: [], 
+                suoritus: { komo: "1.2.246.562.13.62959769647" },
+                arvosanas: haeArvosanat(todistusEl),
+                supressed: [],
               }
             })
         }
@@ -46,9 +46,9 @@
             .flatMap(function(aineEl) {
               return xmlSelect(aineEl, "yhteinen,valinnainen")
                 .map(function(arvosanaEl) {
-                  return { 
-                    aine: aineEl.tagName, 
-                    arvio: { arvosana: arvosanaEl.textContent }, 
+                  return {
+                    aine: aineEl.tagName,
+                    arvio: { arvosana: arvosanaEl.textContent },
                     lisatieto: xmlSelect(aineEl, "tyyppi,kieli").map(function(lisatietoEl) {
                       return lisatietoEl.textContent
                     }).join("")
@@ -61,8 +61,8 @@
           return Array.prototype.slice.call(xml.querySelectorAll(selector))
         }
 
-        Array.prototype.flatMap = function(f) { 
-              return Array.prototype.concat.apply([], this.map(f)); 
+        Array.prototype.flatMap = function(f) {
+              return Array.prototype.concat.apply([], this.map(f));
         };
       </script>
   </body>
