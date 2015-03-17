@@ -13,8 +13,12 @@
       <h1>Todistusvalidaattoritesteri</h1>
       <input type="file" id="fileupload">
       <pre id="result" ></pre>
+      <script type="text/javascript" src="../../target/javascripts/goog/base.js"></script>
+
       <script type="text/javascript" src="../../target/javascripts/hakurekisteri-validator.js"></script>
       <script>
+        goog.require('hakurekisteri.perusopetus')
+
         fileupload.addEventListener("change", function() {
           var file = fileupload.files[0]
           reader = new FileReader()

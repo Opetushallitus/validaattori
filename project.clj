@@ -22,9 +22,11 @@
                                                          ; The standard ClojureScript compiler options:
                                                          ; (See the ClojureScript compiler documentation for details.)
                                                          :compiler {
+                                                                    :output-dir "target/javascripts"
                                                                     :output-to "target/javascripts/hakurekisteri-validator.js"  ; default: target/cljsbuild-main.js
-                                                                    :optimizations :whitespace
-                                                                    :pretty-print true}
+                                                                    :optimizations :none
+                                                                    :pretty-print true
+                                                                    :source-map true}
                                                          }]}}}
   :hooks [leiningen.dalap]
   :cljsbuild {
