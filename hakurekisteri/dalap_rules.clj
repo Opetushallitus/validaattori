@@ -8,4 +8,5 @@
                                                                                              '.arvio '.-arvio
                                                                                              '.aine '.-aine
                                                                                              '.lisatieto '.-lisatieto
-                                                                                             '.komo '.-komo]}
+                                                                                             '.komo '.-komo
+                                                                                             '.tila '.-tila]}

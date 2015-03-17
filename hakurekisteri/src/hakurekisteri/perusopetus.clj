@@ -7,6 +7,16 @@
   (= "1.2.246.562.13.62959769647"
      (get-in t [:suoritus :komo])))
 
+(defn not-failed? [t]
+  (not (= "KESKEYTYNYT"
+     (get-in t [:suoritus :tila]))))
+
+(defn not-failed-perusopetus? [t]
+  (and
+   (perusopetus? t)
+   (not-failed? t)))
+
+
 (defn mandatory [s]
   (fn [t] (some
            #(= s (:aine %1))
@@ -14,7 +24,7 @@
 
 (defn mandatory-perusopetus-subject [s]
   (rule (keyword (str "mandatory-" (lower-case s)))
-         :applies perusopetus?
+         :applies not-failed-perusopetus?
          :validator (mandatory s)))
 
 
@@ -33,14 +43,14 @@
 
 (defrecord Arvosana [aine arvio lisatieto])
 
-(defrecord Suoritus [komo])
+(defrecord Suoritus [komo tila])
 
 (defn arvosana [o]
   (->Arvosana (.aine o) (.arvosana (.arvio o)) (.lisatieto o)))
 
 
 (defn suoritus [o]
-  (->Suoritus (.komo o)))
+  (->Suoritus (.komo o) (.tila o)))
 
 (defn todistus [o]
   (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (set (.supressed o))))
