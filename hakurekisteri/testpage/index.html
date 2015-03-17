@@ -3,6 +3,7 @@
   <body>
       <h1>Todistusvalidaattoritesteri</h1>
       <input type="file" id="fileupload">
+      <div id="result"></div>
       <script type="text/javascript" src="../../target/javascripts/hakurekisteri-validator.js"></script>
       <script>
         fileupload.addEventListener("change", function() { 
@@ -22,9 +23,11 @@
 
           todistukset = haeTodistukset(xmlDoc)
 
-          var result = todistukset.map( hakurekisteri.perusopetus.validateTodistus ) 
+          var result = todistukset.flatMap( hakurekisteri.perusopetus.validateTodistus ) 
 
           console.log(result)
+
+          document.getElementById("result").textContent = result
         }
 
         function haeTodistukset(xmlDoc) {

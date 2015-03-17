@@ -15,3 +15,5 @@ Buildaa hakurekisterin validaattori
 Avaa testisivu
 
     open hakurekisteri/testpage/index.html
+
+Avaa tiedostovalitsimella testitiedosto `esimerkki-arvosanat.xml`.
