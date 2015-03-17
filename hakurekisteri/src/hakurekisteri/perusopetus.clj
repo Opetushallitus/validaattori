@@ -2,8 +2,6 @@
   (:require [validator.core :refer [validate Validatable]]
             [validator.ruleset :refer [find-rules ruleset rule problems?]]))
 
-
-
 (defn perusopetus? [t]
   (= "1.2.246.562.13.62959769647"
      (get-in t [:suoritus :komo])))
@@ -19,16 +17,11 @@
          :applies perusopetus?
          :validator (mandatory "AI"))))
 
-
-
-
 (defrecord Todistus [suoritus arvosanat supressed]
   Validatable
   (validate [this]
             (mapcat #(problems? %1 this) (find-rules perusopetus this)))
   (supressed [this] (:supressed this)))
-
-
 
 (defrecord Arvosana [aine arvio lisatieto])
 
@@ -42,8 +35,8 @@
   (->Suoritus (.komo o)))
 
 (defn todistus [o]
-  (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (.supressed o)))
+  (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (set (.supressed o))))
 
 
 (defn ^:export validateTodistus [t]
-  (validate (todistus t)))
+  (clj->js (validate (todistus t))))
