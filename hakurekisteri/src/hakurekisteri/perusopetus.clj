@@ -1,5 +1,6 @@
 (ns hakurekisteri.perusopetus
   (:require [validator.core :refer [validate Validatable]]
+            [clojure.string :refer [lower-case]]
             [validator.ruleset :refer [find-rules ruleset rule problems?]]))
 
 (defn perusopetus? [t]
@@ -11,11 +12,18 @@
            #(= s (:aine %1))
            (:arvosanat t))))
 
-(def perusopetus
-  (ruleset
-   (rule :mandatory-ai
+(defn mandatory-perusopetus-subject [s]
+  (rule (keyword (str "mandatory-" (lower-case s)))
          :applies perusopetus?
-         :validator (mandatory "AI"))))
+         :validator (mandatory s)))
+
+
+(def mandatory-subjects #{"TE" "KO" "BI" "MU" "LI" "A1" "KT" "GE" "KU" "B1" "KE" "MA" "FY" "KS" "YH" "HI" "AI"})
+
+
+
+(def perusopetus
+  (apply ruleset (map mandatory-perusopetus-subject mandatory-subjects)))
 
 (defrecord Todistus [suoritus arvosanat supressed]
   Validatable
