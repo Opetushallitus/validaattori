@@ -75,7 +75,9 @@
                     arvio: { arvosana: arvosanaEl.textContent },
                     lisatieto: xmlSelect(aineEl, "tyyppi,kieli").map(function(lisatietoEl) {
                       return lisatietoEl.textContent
-                    }).join("")
+                    }).join(""),
+                    valinnainen: arvosanaEl.tagName == "valinnainen"
+
                   }
                 })
             })
