@@ -1,0 +1,30 @@
+<html>
+  <head></head>
+  <body>
+      <h1>Todistusvalidaattoritesteri</h1>
+      <input type="file" id="fileupload">
+      <script type="text/javascript" src="../../target/javascripts/hakurekisteri-validator.js"></script>
+      <script>
+        fileupload.addEventListener("change", function() { 
+          var file = fileupload.files[0]
+          reader  = new FileReader()
+          reader.readAsText(file)
+          reader.addEventListener("loadend", function() {
+            validoiXmlTodistus(reader.result) 
+          })
+        })
+
+        function validoiXmlTodistus(xml) {
+          console.log(xml)
+          // toistaiseksi validoidaan fiksattu data
+          var todistus = { suoritus: { komo: "1.2.246.562.13.62959769647" }, 
+            arvosanas: [], 
+            supressed: [], 
+            id: "asdf" 
+          }
+          var result = hakurekisteri.perusopetus.validateTodistus(todistus) 
+          console.log(result)
+        }
+      </script>
+  </body>
+</html>
