@@ -82,4 +82,4 @@
 
 
 (defn ^:export validateTodistus [t]
-  (clj->js (validate (todistus t))))
+  (validate (todistus t)))

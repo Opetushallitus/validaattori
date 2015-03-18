@@ -25,8 +25,6 @@
                                                                     :output-dir "target/javascripts"
                                                                     :output-to "target/javascripts/hakurekisteri-validator.js"  ; default: target/cljsbuild-main.js
                                                                     :optimizations :none
-                                                                    :foreign-libs  [{:file "hakurekisteri/js/xml-validator.js"
-                                                                                     :provides ["hakurekisteri.xml.validator"]}]
                                                                     :pretty-print true
                                                                     :source-map true}
                                                          }]}}}
