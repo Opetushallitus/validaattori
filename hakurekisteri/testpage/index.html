@@ -17,14 +17,14 @@
 
       <script type="text/javascript" src="../../target/javascripts/hakurekisteri-validator.js"></script>
       <script>
-        goog.require('hakurekisteri.perusopetus.xmlvalidate')
+        goog.require('hakurekisteri.perusopetus.xml.validate')
 
         fileupload.addEventListener("change", function() {
           var file = fileupload.files[0]
           reader = new FileReader()
           reader.readAsText(file)
           reader.addEventListener("loadend", function() {
-            var result = hakurekisteri.perusopetus.xmlvalidate.validoi(reader.result)
+            var result = hakurekisteri.perusopetus.xml.validate.validoi(reader.result)
             document.getElementById("result").innerHTML  = syntaxHighlight(JSON.stringify(result,null,2))
 
           })

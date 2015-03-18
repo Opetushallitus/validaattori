@@ -1,4 +1,4 @@
-(ns hakurekisteri.perusopetus.xmlvalidate
+(ns hakurekisteri.perusopetus.xml.validate
   (:require [hakurekisteri.perusopetus :refer [validateTodistus]]))
 
 
