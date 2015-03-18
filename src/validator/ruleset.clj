@@ -1,5 +1,5 @@
 (ns validator.ruleset
-  (:require [validator.core :refer [supressed]]))
+  (:require [validator.core :refer [suppressed]]))
 
 (defprotocol Ruleset
   "ruleset for validation"
@@ -23,7 +23,7 @@
   Rule
   (applies? [this resource] (and
                              ((:applies this) resource)
-                             (not ((supressed resource) (:id this)))))
+                             (not ((suppressed resource) (:id this)))))
 
   (problems? [this resource] (if
                                ((:validator this) resource)

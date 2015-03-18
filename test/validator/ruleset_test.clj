@@ -1,19 +1,19 @@
 (ns validator.ruleset-test
   (:use midje.sweet
         validator.ruleset)
-  (:require [validator.core :refer [Validatable supressed]]))
+  (:require [validator.core :refer [Validatable suppressed]]))
 
 
 (extend-type clojure.lang.Keyword
   Validatable
   (validate [this] :unifinished)
-  (supressed [this] :unifinished))
+  (suppressed [this] :unifinished))
 
 
 (extend-type midje.data.metaconstant.Metaconstant
   Validatable
   (validate [this] :unifinished)
-  (supressed [this] :unifinished))
+  (suppressed [this] :unifinished))
 
 
 (extend-type midje.data.metaconstant.Metaconstant
@@ -74,14 +74,4 @@
               (rule "example" :applies (partial = ...resource...) :validator (constantly false))
               ...resource...) => false
              (provided
-              (supressed ...resource...) => #{"example"})))
-
-
-
-
-
-
-
-
-
-
+              (suppressed ...resource...) => #{"example"})))

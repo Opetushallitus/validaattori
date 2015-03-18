@@ -3,7 +3,7 @@
   ["src/validator/ruleset.clj" "gen-cljs/validator/ruleset.cljs"] []
   ["hakurekisteri/src/hakurekisteri/perusopetus.clj" "gen-cljs/hakurekisteri/perusopetus.cljs"] ['.suoritus '.-suoritus
                                                                                              '.arvosanas '.-arvosanas
-                                                                                             '.supressed '.-supressed
+                                                                                             '.suppressed '.-suppressed
                                                                                              '.arvosana '.-arvosana
                                                                                              '.arvio '.-arvio
                                                                                              '.aine '.-aine

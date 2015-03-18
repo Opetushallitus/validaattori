@@ -54,11 +54,11 @@
                   no-valinnainen-without-yleinen
                   (map mandatory-perusopetus-subject mandatory-subjects))))
 
-(defrecord Todistus [suoritus arvosanat supressed]
+(defrecord Todistus [suoritus arvosanat suppressed]
   Validatable
   (validate [this]
             (mapcat #(problems? %1 this) (find-rules perusopetus this)))
-  (supressed [this] (:supressed this)))
+  (suppressed [this] (:suppressed this)))
 
 (defrecord Arvosana [aine arvio lisatieto valinnainen])
 
@@ -78,7 +78,7 @@
   (->Suoritus (.komo o) (.tila o)))
 
 (defn todistus [o]
-  (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (set (.supressed o))))
+  (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (set (.suppressed o))))
 
 
 (defn ^:export validateTodistus [t]
