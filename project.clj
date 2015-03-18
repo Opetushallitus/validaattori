@@ -18,7 +18,7 @@
                                    :cljsbuild {
                                                :builds [{
                                                          ; The path to the top-level ClojureScript source directory:
-                                                         :source-paths ["cljs"]
+                                                         :source-paths ["gen-cljs"]
                                                          ; The standard ClojureScript compiler options:
                                                          ; (See the ClojureScript compiler documentation for details.)
                                                          :compiler {
@@ -32,7 +32,7 @@
   :cljsbuild {
     :builds [{
         ; The path to the top-level ClojureScript source directory:
-        :source-paths ["cljs"]
+        :source-paths ["gen-cljs"]
         ; The standard ClojureScript compiler options:
         ; (See the ClojureScript compiler documentation for details.)
         :compiler {
