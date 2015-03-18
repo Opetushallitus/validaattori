@@ -58,11 +58,12 @@
         function haeTodistukset(xmlDoc) {
           return xmlSelect(xmlDoc, "perusopetus")
           .map(function(todistusEl) {
-            if (todistusEl.querySelector("eivalmistu"))
-            return {
-              suoritus: { komo: "1.2.246.562.13.62959769647", tila: "KESKEYTYNYT"},
-              arvosanas: [],
-              suppressed: [],
+            if (todistusEl.querySelector("eivalmistu")) {
+              return {
+                suoritus: { komo: "1.2.246.562.13.62959769647", tila: "KESKEYTYNYT"},
+                arvosanas: [],
+                suppressed: [],
+              }
             }
             return {
               suoritus: { komo: "1.2.246.562.13.62959769647", tila: "VALMIS"},
