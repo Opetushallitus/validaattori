@@ -37,7 +37,8 @@
                                                          :compiler {:output-dir "target/prod"
                                                                     :output-to "target/prod/hakurekisteri-validator.min.js"
                                                                     :optimizations :advanced
-                                                                    :pretty-print false}
+                                                                    :pretty-print false
+                                                                    }
                                                          }
                                                         ]}}}
   :hooks [leiningen.dalap]

@@ -6,6 +6,56 @@
 (enable-console-print!)
 
 
+(extend-type js/NodeList
+  ILookup
+  (-lookup [nl k] (-lookup nl k nil))
+  (-lookup [nl k not-found] (if (number? k)
+                                (if-let [result (.item nl k)] result not-found)
+                                not-found))
+  ICounted
+  (-count [nl] (.-length nl))
+
+  ISeqable
+  (-seq [nl]
+        (letfn [(nl-seq ([nl] (nl-seq nl 0))
+                        ([nl n]
+                         (when-not (= n (count nl))
+                           (cons (get nl n) (lazy-seq (nl-seq nl (inc n)))))))]
+          (nl-seq nl)))
+
+  ISeq
+  (-first [nl]
+    (first (seq nl)))
+  (-rest [nl]
+    (rest (seq nl))))
+
+(defn parse-selector [selector]
+  (cond
+   (keyword? selector) (name selector)
+   (sequential? selector) (apply str (interpose "," (map parse-selector selector)))
+   :default selector))
+
+
+(extend-type js/Element
+  ILookup
+  (-lookup [e s] (-lookup e s nil))
+  (-lookup [e s not-found]
+           (if
+             (= ::text s)
+             (.-textContent e)
+             (if-let [result (.querySelector e (parse-selector s))]
+               result
+               not-found)))
+  INamed
+  (-name [e] (.-tagName e))
+  (-namespace [_] nil))
+
+(defn xml-select
+  ([xml selector]
+   (.querySelectorAll xml (parse-selector selector)))
+  ([xml selector & selectors]
+   (xml-select xml (cons selector selectors))))
+
 (defn zero-pad [n p]
   (if (>= (count (str n)) p)
     n
@@ -27,45 +77,39 @@
 
 
 
-(defn xml-select [xml selector]
-            (let [selection (.querySelectorAll xml selector)]
-              (for [i (range (.-length selection))]
-                (.item selection i))))
-
-
 (defn parse-arvosana [aineEl]
   (fn [arvosanaEl]
     (po/->Arvosana
-     (.-tagName aineEl)
-     (.-textContent arvosanaEl)
-     (apply str (mapcat #(.-textContent %1) (xml-select aineEl "tyyppi,kieli")))
-     (= "valinnainen" (.-tagName arvosanaEl)))))
+     (name aineEl)
+     (get arvosanaEl ::text)
+     (apply str (mapcat #(get %1 ::text) (xml-select aineEl :tyyppi :kieli)))
+     (= "valinnainen" (name arvosanaEl)))))
 
 (defn find-arvosanat [aineEl]
-  (map (parse-arvosana aineEl) (xml-select aineEl "yhteinen,valinnainen")))
+  (map (parse-arvosana aineEl) (xml-select aineEl :yhteinen :valinnainen)))
 
 
 (defn arvosanat [todistusEl]
   (mapcat find-arvosanat (xml-select todistusEl "*")))
 
+(def perusopetus-komo "1.2.246.562.13.62959769647")
 
 (defn parse-todistus [todistusEl]
   (if
-    (.querySelector todistusEl "eivalmistu")
+    (get todistusEl :eivalmistu)
     (po/->Todistus
-     (po/->Suoritus "1.2.246.562.13.62959769647" "KESKEYTYNYT")
+     (po/->Suoritus perusopetus-komo "KESKEYTYNYT")
      []
      #{})
     (po/->Todistus
-     (po/->Suoritus "1.2.246.562.13.62959769647" "VALMIS")
+     (po/->Suoritus perusopetus-komo "VALMIS")
      (arvosanat todistusEl)
      #{})))
 
 
 
 (defn todistukset [xmlDoc]
-  (map parse-todistus (xml-select xmlDoc "perusopetus")))
-
+  (map parse-todistus (xml-select xmlDoc :perusopetus)))
 
 
 (defn ^:export validoi [xml]
