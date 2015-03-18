@@ -17,87 +17,20 @@
 
       <script type="text/javascript" src="../../target/javascripts/hakurekisteri-validator.js"></script>
       <script>
-        goog.require('hakurekisteri.perusopetus')
+        goog.require('hakurekisteri.perusopetus.xmlvalidate')
 
         fileupload.addEventListener("change", function() {
           var file = fileupload.files[0]
           reader = new FileReader()
           reader.readAsText(file)
           reader.addEventListener("loadend", function() {
-            validoiXmlTodistus(reader.result)
+            var result = hakurekisteri.perusopetus.xmlvalidate.validoi(reader.result)
+            document.getElementById("result").innerHTML  = syntaxHighlight(JSON.stringify(result,null,2))
+
           })
         })
 
-        function pad(n, p, c) {
-          var pad_char = typeof c !== 'undefined' ? c : '0';
-          var padding = new Array(1 + p).join(pad_char);
-          return (padding + n).slice(-padding.length);
-        }
 
-        function time() {
-          var d = new Date()
-          return pad(d.getHours(), 2) + ":" +pad(d.getMinutes(),2) + ":" + pad(d.getSeconds(),2) + "." + pad(d.getMilliseconds(),3)
-        }
-
-        function validoiXmlTodistus(xml) {
-          console.log("start: " + time())
-          var parser=new DOMParser();
-
-          xmlDoc=parser.parseFromString(xml,"text/xml");
-          console.log("parsed: " + time())
-
-          todistukset = haeTodistukset(xmlDoc)
-          console.log("objects created: " + time())
-
-          var result = todistukset.flatMap( hakurekisteri.perusopetus.validateTodistus )
-          console.log("validation done: " + time())
-
-          document.getElementById("result").innerHTML  = syntaxHighlight(JSON.stringify(result,null,2))
-        }
-
-        function haeTodistukset(xmlDoc) {
-          return xmlSelect(xmlDoc, "perusopetus")
-          .map(function(todistusEl) {
-            if (todistusEl.querySelector("eivalmistu")) {
-              return {
-                suoritus: { komo: "1.2.246.562.13.62959769647", tila: "KESKEYTYNYT"},
-                arvosanas: [],
-                suppressed: [],
-              }
-            }
-            return {
-              suoritus: { komo: "1.2.246.562.13.62959769647", tila: "VALMIS"},
-              arvosanas: haeArvosanat(todistusEl),
-              suppressed: [],
-            }
-          })
-        }
-
-        function haeArvosanat(todistusEl) {
-          return xmlSelect(todistusEl, "*")
-          .flatMap(function(aineEl) {
-            return xmlSelect(aineEl, "yhteinen,valinnainen")
-            .map(function(arvosanaEl) {
-              return {
-                aine: aineEl.tagName,
-                arvio: { arvosana: arvosanaEl.textContent },
-                lisatieto: xmlSelect(aineEl, "tyyppi,kieli").map(function(lisatietoEl) {
-                  return lisatietoEl.textContent
-                  }).join(""),
-                  valinnainen: arvosanaEl.tagName == "valinnainen"
-
-                }
-              })
-            })
-          }
-
-          function xmlSelect(xml, selector) {
-            return Array.prototype.slice.call(xml.querySelectorAll(selector))
-          }
-
-          Array.prototype.flatMap = function(f) {
-            return Array.prototype.concat.apply([], this.map(f));
-          };
 
           function syntaxHighlight(json) {
             if (typeof json != 'string') {
