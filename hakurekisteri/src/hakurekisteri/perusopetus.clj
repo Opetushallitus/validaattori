@@ -81,6 +81,6 @@
   (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (set (.suppressed o))))
 
 
-(defn ^:export validate-todistus [t]
+(defn validate-todistus [t]
   (.log js/console t)
   (validate (todistus t)))
