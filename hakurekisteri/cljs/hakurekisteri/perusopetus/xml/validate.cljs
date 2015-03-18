@@ -1,5 +1,5 @@
 (ns hakurekisteri.perusopetus.xml.validate
-  (:require [hakurekisteri.perusopetus :refer [validateTodistus]]))
+  (:require [hakurekisteri.perusopetus :refer [validate-todistus]]))
 
 
 (enable-console-print!)
@@ -26,28 +26,28 @@
 
 
 
-(defn xmlSelect [xml selector]
+(defn xml-select [xml selector]
             (let [selection (.querySelectorAll xml selector)]
               (for [i (range (.-length selection))]
                 (.item selection i))))
 
 
-(defn parseArvosana [aineEl]
+(defn parse-arvosana [aineEl]
   (fn [arvosanaEl]
     (js-obj
      "aine" (.-tagName aineEl)
      "arvio" (js-obj "arvosana" (.-textContent arvosanaEl))
-     "lisatieto" (apply str (mapcat #(.-textContent %1) (xmlSelect aineEl "tyyppi,kieli"))))))
+     "lisatieto" (apply str (mapcat #(.-textContent %1) (xml-select aineEl "tyyppi,kieli"))))))
 
-(defn findArvosanat [aineEl]
-  (map (parseArvosana aineEl) (xmlSelect aineEl "yhteinen,valinnainen")))
-
-
-(defn haeArvosanat [todistusEl]
-  (mapcat findArvosanat (xmlSelect todistusEl "*")))
+(defn find-arvosanat [aineEl]
+  (map (parse-arvosana aineEl) (xml-select aineEl "yhteinen,valinnainen")))
 
 
-(defn parseTodistus [todistusEl]
+(defn arvosanat [todistusEl]
+  (mapcat find-arvosanat (xml-select todistusEl "*")))
+
+
+(defn parse-todistus [todistusEl]
   (if
     (.querySelector todistusEl "eivalmistu")
     (js-obj
@@ -56,13 +56,13 @@
      "suppressed" #{})
     (js-obj
      "suoritus" (js-obj "komo" "1.2.246.562.13.62959769647" "tila" "VALMIS")
-     "arvosanas" (haeArvosanat todistusEl)
+     "arvosanas" (arvosanat todistusEl)
      "suppressed" #{})))
 
 
 
-(defn haeTodistukset [xmlDoc]
-  (map parseTodistus (xmlSelect xmlDoc "perusopetus")))
+(defn todistukset [xmlDoc]
+  (map parse-todistus (xml-select xmlDoc "perusopetus")))
 
 
 
@@ -71,9 +71,9 @@
   (let [parser (js/DOMParser.)
         xmlDoc (.parseFromString parser xml "application/xml")
         _ (log-phase :parse)
-        todistukset (haeTodistukset xmlDoc)
+        todistukset (todistukset xmlDoc)
         _2  (log-phase :object-creation)
-        result (clj->js (mapcat validateTodistus todistukset))]
+        result (clj->js (mapcat validate-todistus todistukset))]
     (log-phase :validation)
     result))
 
