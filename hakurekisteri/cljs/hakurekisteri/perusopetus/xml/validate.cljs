@@ -1,5 +1,6 @@
 (ns hakurekisteri.perusopetus.xml.validate
-  (:require [hakurekisteri.perusopetus :refer [validate-todistus]]))
+  (:require [hakurekisteri.perusopetus :as po]
+            [validator.core :refer [validate]]))
 
 
 (enable-console-print!)
@@ -34,10 +35,11 @@
 
 (defn parse-arvosana [aineEl]
   (fn [arvosanaEl]
-    (js-obj
-     "aine" (.-tagName aineEl)
-     "arvio" (js-obj "arvosana" (.-textContent arvosanaEl))
-     "lisatieto" (apply str (mapcat #(.-textContent %1) (xml-select aineEl "tyyppi,kieli"))))))
+    (po/->Arvosana
+     (.-tagName aineEl)
+     (.-textContent arvosanaEl)
+     (apply str (mapcat #(.-textContent %1) (xml-select aineEl "tyyppi,kieli")))
+     (= "valinnainen" (.-tagName arvosanaEl)))))
 
 (defn find-arvosanat [aineEl]
   (map (parse-arvosana aineEl) (xml-select aineEl "yhteinen,valinnainen")))
@@ -50,14 +52,14 @@
 (defn parse-todistus [todistusEl]
   (if
     (.querySelector todistusEl "eivalmistu")
-    (js-obj
-     "suoritus" (js-obj "komo" "1.2.246.562.13.62959769647" "tila" "KESKEYTYNYT")
-     "arvosanas" []
-     "suppressed" #{})
-    (js-obj
-     "suoritus" (js-obj "komo" "1.2.246.562.13.62959769647" "tila" "VALMIS")
-     "arvosanas" (arvosanat todistusEl)
-     "suppressed" #{})))
+    (po/->Todistus
+     (po/->Suoritus "1.2.246.562.13.62959769647" "KESKEYTYNYT")
+     []
+     #{})
+    (po/->Todistus
+     (po/->Suoritus "1.2.246.562.13.62959769647" "VALMIS")
+     (arvosanat todistusEl)
+     #{})))
 
 
 
@@ -66,14 +68,14 @@
 
 
 
-(defn validoi [xml]
+(defn ^:export validoi [xml]
   (log-phase :start)
   (let [parser (js/DOMParser.)
         xmlDoc (.parseFromString parser xml "application/xml")
         _ (log-phase :parse)
         todistukset (todistukset xmlDoc)
         _2  (log-phase :object-creation)
-        result (clj->js (mapcat validate-todistus todistukset))]
+        result (clj->js (mapcat validate todistukset))]
     (log-phase :validation)
     result))
 

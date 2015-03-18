@@ -82,4 +82,5 @@
 
 
 (defn ^:export validate-todistus [t]
+  (.log js/console t)
   (validate (todistus t)))

@@ -27,7 +27,19 @@
                                                                     :optimizations :none
                                                                     :pretty-print true
                                                                     :source-map true}
-                                                         }]}}}
+                                                         }
+                                                         {
+                                                         :id "prod"
+                                                         ; The path to the top-level ClojureScript source directory:
+                                                         :source-paths ["hakurekisteri/cljs" "gen-cljs"]
+                                                         ; The standard ClojureScript compiler options:
+                                                         ; (See the ClojureScript compiler documentation for details.)
+                                                         :compiler {:output-dir "target/prod"
+                                                                    :output-to "target/prod/hakurekisteri-validator.min.js"
+                                                                    :optimizations :advanced
+                                                                    :pretty-print false}
+                                                         }
+                                                        ]}}}
   :hooks [leiningen.dalap]
   :cljsbuild {
     :builds [{
