@@ -12,8 +12,8 @@
   (fn [arvosana-el]
     (po/->Arvosana
      (name aine-el)
-     (get arvosana-el text-content)
-     (apply str (mapcat #(get %1 text-content) (xml-select aine-el :tyyppi :kieli)))
+     (text-content arvosana-el)
+     (apply str (mapcat #(text-content %1) (xml-select aine-el :tyyppi :kieli)))
      (= "valinnainen" (name arvosana-el)))))
 
 (defn find-arvosanat [aine-el]
@@ -27,7 +27,7 @@
 
 (defn parse-todistus [todistus-el]
   (if
-    (get todistus-el :eivalmistu)
+    (:eivalmistu todistus-el)
     (po/->Todistus
      (po/->Suoritus perusopetus-komo "KESKEYTYNYT")
      []
