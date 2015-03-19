@@ -24,19 +24,34 @@
                     not-failed-perusopetus?)
          :validator validator))
 
-(defn mandatory [s]
+(defn mandatory [p]
   (fn [t] (some
-           (every-pred #(= s (:aine %1)) #(not (:valinnainen %1)))
+           (every-pred p #(not (:valinnainen %1)))
            (:arvosanat t))))
 
-(defn mandatory-perusopetus-subject [s]
-  (perusopetus-rule (keyword (str "mandatory-" (lower-case s)))
-         :validator (mandatory s)))
+(defmulti mandatory-perusopetus-subject type)
+
+(defmulti find-name-for-mandatory coll?)
+
+(defmethod find-name-for-mandatory true [s]
+  (apply str (interpose "-or-" (map lower-case s))))
+
+(defmethod find-name-for-mandatory :default [s]
+  (lower-case (str s)))
+
+(defmethod mandatory-perusopetus-subject IFn [f]
+  (perusopetus-rule (keyword (str "mandatory-" (find-name-for-mandatory f)))
+         :validator (mandatory f)))
 
 
+(defmethod mandatory-perusopetus-subject :default [s]
+  (perusopetus-rule (keyword (str "mandatory-" (find-name-for-mandatory s)))
+         :validator (mandatory #(= s (:aine %1)))))
 
 
-(def mandatory-subjects #{"TE" "KO" "BI" "MU" "LI" "A1" "KT" "GE" "KU" "B1" "KE" "MA" "FY" "KS" "YH" "HI" "AI"})
+;todo or version with set
+
+(def mandatory-subjects #{"TE" "KO" "BI" "MU" "LI" "A1" "KT" "GE" "KU" #{"A2" "B1"} "KE" "MA" "FY" "KS" "YH" "HI" "AI"})
 
 (defn by-subject [as]
   (group-by :aine as))
