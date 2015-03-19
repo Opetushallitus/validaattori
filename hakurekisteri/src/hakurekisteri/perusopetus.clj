@@ -29,7 +29,7 @@
            (every-pred p #(not (:valinnainen %1)))
            (:arvosanat t))))
 
-(defmulti mandatory-perusopetus-subject type)
+(defmulti mandatory-perusopetus-subject ifn?)
 
 (defmulti find-name-for-mandatory coll?)
 
@@ -39,7 +39,7 @@
 (defmethod find-name-for-mandatory :default [s]
   (lower-case (str s)))
 
-(defmethod mandatory-perusopetus-subject clojure.lang.IFn [f]
+(defmethod mandatory-perusopetus-subject true [f]
   (perusopetus-rule (keyword (str "mandatory-" (find-name-for-mandatory f)))
          :validator (mandatory (comp f :aine))))
 
@@ -48,8 +48,6 @@
   (perusopetus-rule (keyword (str "mandatory-" (find-name-for-mandatory s)))
          :validator (mandatory #(= s (:aine %1)))))
 
-
-;todo or version with set
 
 (def mandatory-subjects #{"TE" "KO" "BI" "MU" "LI" "A1" "KT" "GE" "KU" #{"A2" "B1"} "KE" "MA" "FY" "KS" "YH" "HI" "AI"})
 
