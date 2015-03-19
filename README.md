@@ -11,13 +11,11 @@ Datavalidaatio sekä selaimelle että serverille samalla koodilla.
 Buildaa hakurekisterin validaattori (prod build)
 
     lein with-profile hakurekisteri cljsbuild once prod
+    open hakurekisteri/testpage/prod.html
 
 Tai buildaa dev-build
 
     lein with-profile hakurekisteri cljsbuild once dev
-
-Avaa testisivu
-
     open hakurekisteri/testpage/index.html
 
 Avaa tiedostovalitsimella testitiedosto `esimerkki-arvosanat.xml`.
