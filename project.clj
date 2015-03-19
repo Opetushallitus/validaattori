@@ -11,44 +11,26 @@
                                  [lein-cljsbuild "1.0.5"]
                                  [com.birdseye-sw/lein-dalap "0.1.0"]]
                        :dependencies [[midje "1.6.3"]]}
-                 :hakurekisteri {
-                                   :source-paths ["src" "hakurekisteri/src"]
-                                   :name "hakurekisteri-validation"
-                                   :dalap-rules "hakurekisteri/dalap_rules.clj"
-                                   :cljsbuild {
-                                               :builds [{
-                                                         ; The path to the top-level ClojureScript source directory:
-                                                         :source-paths ["hakurekisteri/cljs" "gen-cljs"]
-                                                         ; The standard ClojureScript compiler options:
-                                                         ; (See the ClojureScript compiler documentation for details.)
-                                                         :compiler {
-                                                                    :output-dir "target/javascripts"
-                                                                    :output-to "target/javascripts/hakurekisteri-validator.js"  ; default: target/cljsbuild-main.js
-                                                                    :optimizations :none
-                                                                    :pretty-print true
-                                                                    :source-map true}
-                                                         }
-                                                         {
-                                                         :id "prod"
-                                                         ; The path to the top-level ClojureScript source directory:
-                                                         :source-paths ["hakurekisteri/cljs" "gen-cljs"]
-                                                         ; The standard ClojureScript compiler options:
-                                                         ; (See the ClojureScript compiler documentation for details.)
-                                                         :compiler {:output-dir "target/prod"
-                                                                    :output-to "target/prod/hakurekisteri-validator.min.js"
-                                                                    :optimizations :advanced
-                                                                    :pretty-print false
-                                                                    }
-                                                         }
-                                                        ]}}}
+                 :hakurekisteri {:source-paths ["src" "hakurekisteri/src"]
+                                 :name "hakurekisteri-validation"
+                                 :dalap-rules "hakurekisteri/dalap_rules.clj"
+                                 :cljsbuild {
+                                             :builds [{:id "dev"
+                                                       :source-paths ["hakurekisteri/cljs" "gen-cljs"]
+                                                       :compiler {
+                                                                  :output-dir "target/javascripts"
+                                                                  :output-to "target/javascripts/hakurekisteri-validator.js"  ; default: target/cljsbuild-main.js
+                                                                  :optimizations :none
+                                                                  :pretty-print true
+                                                                  :source-map true}}
+                                                      {:id "prod"
+                                                       :source-paths ["hakurekisteri/cljs" "gen-cljs"]
+                                                       :compiler {:output-dir "target/prod"
+                                                                  :output-to "target/prod/hakurekisteri-validator.min.js"
+                                                                  :optimizations :advanced
+                                                                  :pretty-print false}}]}}}
   :hooks [leiningen.dalap]
-  :cljsbuild {
-    :builds [{
-        ; The path to the top-level ClojureScript source directory:
-        :source-paths ["gen-cljs"]
-        ; The standard ClojureScript compiler options:
-        ; (See the ClojureScript compiler documentation for details.)
-        :compiler {
-          :output-to "target/javascripts/validator.js"  ; default: target/cljsbuild-main.js
-          :optimizations :whitespace
-          :pretty-print true}}]})
+  :cljsbuild {:builds [{:source-paths ["gen-cljs"]
+                        :compiler {:output-to "target/javascripts/validator.js"  ; default: target/cljsbuild-main.js
+                                   :optimizations :whitespace
+                                   :pretty-print true}}]})
