@@ -41,7 +41,7 @@
 
 (defmethod mandatory-perusopetus-subject clojure.lang.IFn [f]
   (perusopetus-rule (keyword (str "mandatory-" (find-name-for-mandatory f)))
-         :validator (mandatory #(f (:aine %1)))))
+         :validator (mandatory (comp f :aine))))
 
 
 (defmethod mandatory-perusopetus-subject :default [s]
