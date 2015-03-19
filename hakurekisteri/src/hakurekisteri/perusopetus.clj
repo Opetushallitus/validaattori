@@ -34,14 +34,14 @@
 (defmulti find-name-for-mandatory coll?)
 
 (defmethod find-name-for-mandatory true [s]
-  (apply str (interpose "-or-" (map lower-case s))))
+  (apply str (interpose "-or-" (sort (map lower-case s)))))
 
 (defmethod find-name-for-mandatory :default [s]
   (lower-case (str s)))
 
-(defmethod mandatory-perusopetus-subject IFn [f]
+(defmethod mandatory-perusopetus-subject clojure.lang.IFn [f]
   (perusopetus-rule (keyword (str "mandatory-" (find-name-for-mandatory f)))
-         :validator (mandatory f)))
+         :validator (mandatory #(f (:aine %1)))))
 
 
 (defmethod mandatory-perusopetus-subject :default [s]
