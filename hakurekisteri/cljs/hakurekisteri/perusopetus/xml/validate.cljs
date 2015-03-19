@@ -1,7 +1,7 @@
 (ns hakurekisteri.perusopetus.xml.validate
   (:require [hakurekisteri.perusopetus :as po]
-            [validator.core :refer [validate]]
-            [hakurekisteri.perusopetus.xml.tools :refer [xml-select text-content]]
+            [validator.core :refer [validate Validatable]]
+            [hakurekisteri.perusopetus.xml.tools :refer [xml-select text-content parse-str]]
             [hakurekisteri.perusopetus.xml.phases :refer [log-phase]]))
 
 
@@ -13,7 +13,7 @@
     (po/->Arvosana
      (name aine-el)
      (text-content arvosana-el)
-     (apply str (mapcat #(text-content %1) (xml-select aine-el :tyyppi :kieli)))
+     (apply str (mapcat text-content (xml-select aine-el :tyyppi :kieli)))
      (= "valinnainen" (name arvosana-el)))))
 
 (defn find-arvosanat [aine-el]
@@ -42,15 +42,22 @@
 (defn todistukset [xml-doc]
   (map parse-todistus (xml-select xml-doc :perusopetus)))
 
+(extend-type LazySeq
+  Validatable
+  (validate [this]
+            (mapcat validate this))
+  (suppressed [this] #{}))
+
+(extend-type js/XMLDocument
+  Validatable
+  (validate [this]
+            (validate (todistukset this)))
+  (suppressed [this] #{}))
 
 (defn ^:export validoi [xml]
   (log-phase :start)
-  (let [parser (js/DOMParser.)
-        xmlDoc (.parseFromString parser xml "application/xml")
-        _ (log-phase :parse)
-        todistukset (todistukset xmlDoc)
-        _2  (log-phase :object-creation)
-        result (clj->js (mapcat validate todistukset))]
+  (let [xml-doc (parse-str xml)
+        result (clj->js (validate xml-doc))]
     (log-phase :validation)
     result))
 

@@ -51,3 +51,6 @@
    (.querySelectorAll xml (parse-selector selector)))
   ([xml selector & selectors]
    (xml-select xml (cons selector selectors))))
+
+(defn parse-str [xml]
+  (.parseFromString (js/DOMParser.)  xml "application/xml"))
