@@ -27,7 +27,7 @@
 
 (defn parse-todistus [todistus-el]
   (if
-    (:eivalmistu todistus-el)
+    (get todistus-el :eivalmistu)
     (po/->Todistus
      (po/->Suoritus perusopetus-komo "KESKEYTYNYT")
      []
