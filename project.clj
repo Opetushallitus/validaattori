@@ -36,6 +36,9 @@
                        "snapshots" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-release-local"
                                     :creds :gpg}]]
   :hooks [leiningen.dalap]
+  :aliases {"hr-prod" ["with-profile" "hakurekisteri" "cljsbuild" "once" "prod"]
+            "hr-dev" ["with-profile" "hakurekisteri" "cljsbuild" "once" "dev"]
+            "hr" ["with-profile" "+hakurekisteri"]}
   :cljsbuild {:builds [{:source-paths ["gen-cljs"]
                         :compiler {:output-to "target/javascripts/validator.js"  ; default: target/cljsbuild-main.js
                                    :optimizations :whitespace
