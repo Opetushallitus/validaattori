@@ -8,9 +8,13 @@ Datavalidaatio sekä selaimelle että serverille samalla koodilla.
 
 ## hakurekisteri-testisivu
 
-Buildaa hakurekisterin validaattori
+Buildaa hakurekisterin validaattori (prod build)
 
-    lein with-profile hakurekisteri cljsbuild auto
+    lein with-profile hakurekisteri cljsbuild once prod
+
+Tai buildaa dev-build
+
+    lein with-profile hakurekisteri cljsbuild once dev
 
 Avaa testisivu
 
