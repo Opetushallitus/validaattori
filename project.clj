@@ -30,8 +30,10 @@
                                                                   :output-to "target/prod/hakurekisteri-validator.min.js"
                                                                   :optimizations :advanced
                                                                   :pretty-print false}}]}}}
-  :repositories [["snapshots" "https://artifactory.oph.ware.fi/artifactory/oph-sade-snapshot-local"]
-                 ["releases" "https://artifactory.oph.ware.fi/artifactory/oph-sade-release-local"]]
+  :deploy-repositories [["releases" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-snapshot-local"
+                                   :creds :gpg}
+                       "snapshots" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-release-local"
+                                    :creds :gpg}]]
   :hooks [leiningen.dalap]
   :cljsbuild {:builds [{:source-paths ["gen-cljs"]
                         :compiler {:output-to "target/javascripts/validator.js"  ; default: target/cljsbuild-main.js
