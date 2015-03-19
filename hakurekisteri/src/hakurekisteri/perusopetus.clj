@@ -69,10 +69,13 @@
                   no-valinnainen-without-yleinen
                   (map mandatory-perusopetus-subject mandatory-subjects))))
 
+(defn validate-perusopetus [t]
+  (mapcat #(problems? %1 t) (find-rules perusopetus t)))
+
 (defrecord Todistus [suoritus arvosanat suppressed]
   Validatable
   (validate [this]
-            (mapcat #(problems? %1 this) (find-rules perusopetus this)))
+            (validate-perusopetus this))
   (suppressed [this] (:suppressed this)))
 
 (defrecord Arvosana [aine arvio lisatieto valinnainen])

@@ -12,6 +12,7 @@
                                  [com.birdseye-sw/lein-dalap "0.1.0"]]
                        :dependencies [[midje "1.6.3"]]}
                  :hakurekisteri {:source-paths ["src" "hakurekisteri/src"]
+                                 :test-paths ["test" "hakurekisteri/test"]
                                  :name "hakurekisteri-validation"
                                  :dalap-rules "hakurekisteri/dalap_rules.clj"
                                  :cljsbuild {
