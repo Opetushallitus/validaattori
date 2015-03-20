@@ -16,6 +16,8 @@
                                  :test-paths ["test" "hakurekisteri/test"]
                                  :name "hakurekisteri-validation"
                                  :dalap-rules "hakurekisteri/dalap_rules.clj"
+                                 :filespecs [{:type :path :path "prod-js/hakurekisteri-validator.min.js"}]
+
                                  :cljsbuild {
                                              :builds [{:id "dev"
                                                        :source-paths ["hakurekisteri/cljs" "gen-cljs"]
@@ -27,8 +29,8 @@
                                                                   :source-map true}}
                                                       {:id "prod"
                                                        :source-paths ["hakurekisteri/cljs" "gen-cljs"]
-                                                       :compiler {:output-dir "target/prod"
-                                                                  :output-to "target/prod/hakurekisteri-validator.min.js"
+                                                       :compiler {:output-dir "prod-js"
+                                                                  :output-to "prod-js/hakurekisteri-validator.min.js"
                                                                   :optimizations :advanced
                                                                   :pretty-print false}}]}}}
   :deploy-repositories {"snapshots" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-snapshot-local"}
