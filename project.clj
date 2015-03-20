@@ -12,7 +12,7 @@
                                  [lein-cljsbuild "1.0.5"]
                                  [com.birdseye-sw/lein-dalap "0.1.0"]]
                        :dependencies [[midje "1.6.3"]]}
-                 :hakurekisteri {:source-paths ["src" "hakurekisteri/src"]
+                 :hakurekisteri ^:leaky {:source-paths ["src" "hakurekisteri/src"]
                                  :test-paths ["test" "hakurekisteri/test"]
                                  :name "hakurekisteri-validation"
                                  :dalap-rules "hakurekisteri/dalap_rules.clj"
@@ -31,10 +31,8 @@
                                                                   :output-to "target/prod/hakurekisteri-validator.min.js"
                                                                   :optimizations :advanced
                                                                   :pretty-print false}}]}}}
-  :deploy-repositories [["releases" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-snapshot-local"
-                                   :creds :gpg}
-                       "snapshots" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-release-local"
-                                    :creds :gpg}]]
+  :deploy-repositories {"snapshots" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-snapshot-local"}
+                        "releases" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-release-local"}}
   :hooks [leiningen.dalap]
   :aliases {"hr" ["with-profile" "+hakurekisteri"]
             "hr-prod" ["hr" "cljsbuild" "once" "prod"]
