@@ -4,7 +4,7 @@
   :license {:name "EUPL"
             :url "http://www.osor.eu/eupl/"}
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2913"]]
+                 [org.clojure/clojurescript "0.0-3126"]]
   :profiles     {:dev {:plugins [[com.cemerick/austin "0.1.6"]
                                  [lein-midje "3.1.1"]
                                  [lein-kibit "0.0.8"]

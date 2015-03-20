@@ -4,10 +4,10 @@
 
 (extend-type js/NodeList
   ILookup
-  (-lookup [nl k] (-lookup nl k nil))
-  (-lookup [nl k not-found] (if (number? k)
+  (-lookup ([nl k] (-lookup nl k nil))
+           ([nl k not-found] (if (number? k)
                                 (if-let [result (.item nl k)] result not-found)
-                                not-found))
+                                not-found)))
   ICounted
   (-count [nl] (.-length nl))
 
@@ -34,14 +34,14 @@
 
 (extend-type js/Element
   ILookup
-  (-lookup [e s] (-lookup e s nil))
-  (-lookup [e s not-found]
-           (if
+  (-lookup ([e s] (-lookup e s nil))
+           ([e s not-found]
+            (if
              (= ::text s)
              (.-textContent e)
              (if-let [result (.querySelector e (parse-selector s))]
                result
-               not-found)))
+               not-found))))
   INamed
   (-name [e] (.-tagName e))
   (-namespace [_] nil))
