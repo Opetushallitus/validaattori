@@ -63,6 +63,3 @@
 
 (fact "valid todistus has no problems"
       (validate (todistus mandatory-subjects)) => [])
-
-
-
