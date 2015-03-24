@@ -16,7 +16,7 @@
                                  [com.birdseye-sw/lein-dalap "0.1.0"]]
                        :dependencies [[midje "1.6.3"]]}
                  :hakurekisteri ^:leaky {:source-paths ["src/clojure" "hakurekisteri/src"]
-                                         :aot [validator.ruleset hakurekisteri.api]
+                                         :aot [validator.rules hakurekisteri.api]
                                  :test-paths ["test" "hakurekisteri/test"]
                                  :name "hakurekisteri-validation"
                                  :dalap-rules "hakurekisteri/dalap_rules.clj"
