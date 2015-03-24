@@ -7,7 +7,7 @@
                  [org.clojure/clojurescript "0.0-3126"]]
   :source-paths ["src/clojure"]
   :java-source-paths ["src/java"]
-  :aot [validator.ruleset]
+  :aot [validator.rules]
   :profiles     {:dev {:plugins [[com.cemerick/austin "0.1.6"]
                                  [lein-midje "3.1.1"]
                                  [lein-kibit "0.0.8"]

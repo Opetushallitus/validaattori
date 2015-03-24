@@ -1,7 +1,7 @@
 (ns hakurekisteri.perusopetus
   (:require [validator.core :refer [validate Validatable]]
             [clojure.string :refer [lower-case]]
-            [validator.ruleset :refer [find-rules ruleset rule problems?]]))
+            [validator.rules :refer [find-rules ruleset rule problems?]]))
 
 (defn perusopetus? [t]
   (= "1.2.246.562.13.62959769647"

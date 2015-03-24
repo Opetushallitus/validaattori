@@ -1,7 +1,7 @@
 (ns hakurekisteri.perusopetus-test
   (:use midje.sweet
         hakurekisteri.perusopetus
-        validator.ruleset)
+        validator.rules)
   (:require [validator.core :refer [Validatable validate]]))
 
 

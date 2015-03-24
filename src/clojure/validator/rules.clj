@@ -1,4 +1,4 @@
-(ns validator.ruleset
+(ns validator.rules
   (:require [validator.core :refer [suppressed]])
   ^:clj (:gen-class))
 
