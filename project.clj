@@ -5,6 +5,7 @@
             :url "http://www.osor.eu/eupl/"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-3126"]]
+  :source-paths ["src/clojure"]
   :profiles     {:dev {:plugins [[com.cemerick/austin "0.1.6"]
                                  [lein-midje "3.1.1"]
                                  [lein-kibit "0.0.8"]
@@ -12,7 +13,7 @@
                                  [lein-cljsbuild "1.0.5"]
                                  [com.birdseye-sw/lein-dalap "0.1.0"]]
                        :dependencies [[midje "1.6.3"]]}
-                 :hakurekisteri ^:leaky {:source-paths ["src" "hakurekisteri/src"]
+                 :hakurekisteri ^:leaky {:source-paths ["src/clojure" "hakurekisteri/src"]
                                  :test-paths ["test" "hakurekisteri/test"]
                                  :name "hakurekisteri-validation"
                                  :dalap-rules "hakurekisteri/dalap_rules.clj"
