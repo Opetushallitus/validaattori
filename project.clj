@@ -6,6 +6,8 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-3126"]]
   :source-paths ["src/clojure"]
+  :java-source-paths ["src/java"]
+  :aot [validator.ruleset]
   :profiles     {:dev {:plugins [[com.cemerick/austin "0.1.6"]
                                  [lein-midje "3.1.1"]
                                  [lein-kibit "0.0.8"]
@@ -14,6 +16,7 @@
                                  [com.birdseye-sw/lein-dalap "0.1.0"]]
                        :dependencies [[midje "1.6.3"]]}
                  :hakurekisteri ^:leaky {:source-paths ["src/clojure" "hakurekisteri/src"]
+                                         :aot [validator.ruleset hakurekisteri.api]
                                  :test-paths ["test" "hakurekisteri/test"]
                                  :name "hakurekisteri-validation"
                                  :dalap-rules "hakurekisteri/dalap_rules.clj"

@@ -7,7 +7,7 @@
 
 
 (defn fails-rule [resource rule]
-  (contains [(just [resource (contains {:id rule})])]))
+  (contains [(just {:resource resource :rule (contains {:id rule})})]))
 
 
 (defmulti create-arvosana type)

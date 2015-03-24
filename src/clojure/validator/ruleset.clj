@@ -1,5 +1,6 @@
 (ns validator.ruleset
-  (:require [validator.core :refer [suppressed]]))
+  (:require [validator.core :refer [suppressed]])
+  (:gen-class))
 
 (defprotocol Ruleset
   "ruleset for validation"
@@ -19,6 +20,11 @@
                #(applies? %1 resource)
                (:rules this))))
 
+(defrecord ValidationFailure [resource rule]
+  validator.ValidationResult
+  (getResource [_] resource)
+  (getFailedRule [_] (name (:id rule))))
+
 (defrecord RuleData [id applies validator]
   Rule
   (applies? [this resource] (and
@@ -30,7 +36,7 @@
                                []
                                [(message this resource)]))
   (id [this] (:id this))
-  (message [this resource] [resource this]))
+  (message [this resource] (->ValidationFailure resource this)))
 
 (defn ruleset [& rules]
   (RulesetData. rules))

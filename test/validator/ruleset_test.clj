@@ -49,10 +49,10 @@
 
 
 (facts "about rule"
-       (fact "it returns the a sequence with problem resource and the failed rule"
+       (fact "it returns the a ValidationFailure record with problem resource and the failed rule"
              (problems?
               (rule "example" :validator (constantly false))
-              ...resource...) => (contains [(just [...resource... (contains {:id "example"})])] ))
+              ...resource...) => (contains [(just {:resource ...resource... :rule (contains {:id "example"})})] ))
        (fact "it returns an empty vector for resource with no problems"
              (problems?
               (rule "example" :validator (constantly true))
