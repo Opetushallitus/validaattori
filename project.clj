@@ -1,6 +1,6 @@
 (defproject validator "0.1.0-SNAPSHOT"
   :description "data validation library"
-  :url "http://example.com/FIXME"
+  :url "https://github.com/Opetushallitus/validaattori"
   :license {:name "EUPL"
             :url "http://www.osor.eu/eupl/"}
   :dependencies [[org.clojure/clojure "1.6.0"]
