@@ -1,4 +1,4 @@
-package validator;
+package validator.api;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package validator;
+package validator.api;
 
 
 public interface ValidationResult {

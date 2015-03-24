@@ -1,6 +1,5 @@
 (ns validator.rules
-  (:require [validator.core :refer [suppressed]])
-  ^:clj (:gen-class))
+  (:require [validator.core :refer [suppressed]]))
 
 (defprotocol Ruleset
   "ruleset for validation"
@@ -22,7 +21,7 @@
 
 (defrecord ValidationFailure [resource rule]
   ^:clj
-  validator.ValidationResult
+  validator.api.ValidationResult
   ^:clj
   (getResource [_] resource)
   ^:clj

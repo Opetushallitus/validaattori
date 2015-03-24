@@ -20,7 +20,7 @@
   (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (set (.suppressed o))))
 
 (gen-class :name hakurekisteri.api.HakurekisteriValidator
-           :implements [validator.Validator])
+           :implements [validator.api.Validator])
 
 
 (defn validate-todistus [t]
