@@ -1,6 +1,7 @@
 (ns hakurekisteri.perusopetus.xml.validate
   (:require [hakurekisteri.perusopetus :as po]
             [validator.core :refer [validate Validatable]]
+            [validator.rules :refer [RuleData failed-rule-id]]
             [hakurekisteri.perusopetus.xml.tools :refer [xml-select text-content parse-str]]
             [hakurekisteri.perusopetus.xml.phases :refer [log-phase]]))
 
@@ -53,6 +54,9 @@
   (validate [this]
             (validate (todistukset this)))
   (suppressed [this] #{}))
+
+(extend-protocol IEncodeJS RuleData
+  (-clj->js [rule] (js-obj "id" (failed-rule-id rule))))
 
 (defn ^:export validoi [xml]
   (log-phase :start)

@@ -3,6 +3,7 @@
             [clojure.string :refer [lower-case]]
             [validator.rules :refer [find-rules ruleset rule problems?]]))
 
+
 (defn perusopetus? [t]
   (= "1.2.246.562.13.62959769647"
      (get-in t [:suoritus :komo])))
@@ -40,12 +41,12 @@
   (lower-case (str s)))
 
 (defmethod mandatory-perusopetus-subject true [f]
-  (perusopetus-rule (keyword (str "mandatory-" (find-name-for-mandatory f)))
+  (perusopetus-rule (keyword "hakurekisteri.perusopetus" (str "mandatory-" (find-name-for-mandatory f)))
          :validator (mandatory (comp f :aine))))
 
 
 (defmethod mandatory-perusopetus-subject :default [s]
-  (perusopetus-rule (keyword (str "mandatory-" (find-name-for-mandatory s)))
+  (perusopetus-rule (keyword "hakurekisteri.perusopetus" (str "mandatory-" (find-name-for-mandatory s)))
          :validator (mandatory #(= s (:aine %1)))))
 
 
@@ -55,7 +56,7 @@
   (group-by :aine as))
 
 (def no-valinnainen-without-yleinen
-  (perusopetus-rule :no-valinnainen-without-yleinen
+  (perusopetus-rule ::no-valinnainen-without-yleinen
         :validator (fn [{:keys [arvosanat]}]
                      (not-any?
                       (fn [[subject arvosanat]]

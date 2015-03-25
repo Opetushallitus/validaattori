@@ -25,41 +25,41 @@
 
 (facts "about mandatory subjects in perusopetuksen todistus"
        (fact "Äidinkieli is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-ai))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-ai))
        (fact "A1 kieli is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-a1))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-a1))
        (fact "Matematiikka is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-ma))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-ma))
        (fact "Käsityö is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-ks))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-ks))
        (fact "Terveystieto is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-te))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-te))
        (fact "Kotitalous is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-ko))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-ko))
        (fact "Biologia is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-bi))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-bi))
        (fact "Musiikki is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-mu))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-mu))
        (fact "Liikunta is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-li))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-li))
        (fact "Katsomustieto is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-kt))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-kt))
        (fact "Maantieto is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-ge))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-ge))
        (fact "Kuvaamataito is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-ku))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-ku))
        (fact "Kemia is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-ke))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-ke))
        (fact "Fysiikka is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-fy))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-fy))
        (fact "B1 or A2 kieli is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-a2-or-b1))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-a2-or-b1))
        (fact "Käsityö is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-ks))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-ks))
        (fact "Yhteiskuntaoppi is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-yh))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-yh))
        (fact "Historia is mandatory"
-             (validate empty-todistus) => (fails-rule empty-todistus :mandatory-hi)))
+             (validate empty-todistus) => (fails-rule empty-todistus :hakurekisteri.perusopetus/mandatory-hi)))
 
 (fact "valid todistus has no problems"
       (validate (todistus mandatory-subjects)) => [])

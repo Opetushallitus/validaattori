@@ -19,13 +19,20 @@
                #(applies? %1 resource)
                (:rules this))))
 
+(defn failed-rule-id [{:keys [id]}]
+  (if-let [idns (and (instance? clojure.lang.Named id) (namespace id))]
+    (str idns "." (name id))
+    (name id)))
+
+
+
 (defrecord ValidationFailure [resource rule]
   ^:clj
   validator.api.ValidationResult
   ^:clj
   (getResource [_] resource)
   ^:clj
-  (getFailedRule [_] (name (:id rule))))
+  (getFailedRule [_] (failed-rule-id rule)))
 
 (defrecord RuleData [id applies validator]
   Rule
