@@ -17,7 +17,6 @@
    (perusopetus? t)
    (not-failed? t)))
 
-
 (defn perusopetus-rule [name & {:keys [applies validator]}]
   (rule name
          :applies (if-let [added-filter applies]
@@ -79,6 +78,6 @@
 
 (defrecord Arvosana [aine arvio lisatieto valinnainen])
 
-(defrecord Suoritus [komo tila])
+(defrecord Suoritus [komo tila oppija])
 
-
+(defrecord Oppija [hetu sukunimi kutsumanimi])

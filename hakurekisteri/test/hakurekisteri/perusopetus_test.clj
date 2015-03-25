@@ -17,7 +17,7 @@
   s)
 
 (defn todistus [s] (->Todistus
-                    (->Suoritus "1.2.246.562.13.62959769647" "VALMIS")
+                    (->Suoritus "1.2.246.562.13.62959769647" "VALMIS" (->Oppija "010101-123N" "Blomqvist" "Eetu"))
                     (map #(->Arvosana (create-arvosana %1) 8 "" false) s)
                     #{}))
 

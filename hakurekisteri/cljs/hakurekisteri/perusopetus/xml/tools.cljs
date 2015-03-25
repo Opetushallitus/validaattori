@@ -52,5 +52,8 @@
   ([xml selector & selectors]
    (xml-select xml (cons selector selectors))))
 
+(defn text-select [el & selectors]
+  (apply str (mapcat text-content (apply xml-select (cons el selectors)))))
+
 (defn parse-str [xml]
   (.parseFromString (js/DOMParser.)  xml "application/xml"))
