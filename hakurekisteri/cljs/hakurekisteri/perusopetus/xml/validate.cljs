@@ -1,19 +1,17 @@
 (ns hakurekisteri.perusopetus.xml.validate
   (:require [hakurekisteri.perusopetus :as po]
             [validator.core :refer [validate Validatable]]
-            [hakurekisteri.perusopetus.xml.tools :refer [xml-select text-content parse-str]]
+            [hakurekisteri.perusopetus.xml.tools :refer [xml-select text-content parse-str text-select]]
             [hakurekisteri.perusopetus.xml.phases :refer [log-phase]]))
 
-
 (enable-console-print!)
-
 
 (defn parse-arvosana [aine-el]
   (fn [arvosana-el]
     (po/->Arvosana
      (name aine-el)
      (text-content arvosana-el)
-     (apply str (mapcat text-content (xml-select aine-el :tyyppi :kieli)))
+     (text-select aine-el :tyyppi :kieli)
      (= "valinnainen" (name arvosana-el)))))
 
 (defn find-arvosanat [aine-el]
@@ -25,22 +23,30 @@
 
 (def perusopetus-komo "1.2.246.562.13.62959769647")
 
-(defn parse-todistus [todistus-el]
+(defn parse-oppija [henkilo-el]
+  (po/->Oppija (text-select henkilo-el :hetu) 
+               (text-select henkilo-el :sukunimi)
+               (text-select henkilo-el :kutsumanimi)))
+
+(defn parse-todistus [oppija todistus-el]
   (if
     (get todistus-el :eivalmistu)
     (po/->Todistus
-     (po/->Suoritus perusopetus-komo "KESKEYTYNYT")
+     (po/->Suoritus perusopetus-komo "KESKEYTYNYT" oppija)
      []
      #{})
     (po/->Todistus
-     (po/->Suoritus perusopetus-komo "VALMIS")
+     (po/->Suoritus perusopetus-komo "VALMIS" oppija)
      (arvosanat todistus-el)
      #{})))
 
-
+(defn henkilon-todistukset [henkilo-el]
+  (let [oppija (parse-oppija henkilo-el)]
+    (map (partial parse-todistus oppija) (xml-select henkilo-el :perusopetus))
+  ))
 
 (defn todistukset [xml-doc]
-  (map parse-todistus (xml-select xml-doc :perusopetus)))
+  (mapcat henkilon-todistukset (xml-select xml-doc :henkilo)))
 
 (extend-type LazySeq
   Validatable
