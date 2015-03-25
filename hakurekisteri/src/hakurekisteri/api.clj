@@ -14,7 +14,7 @@
 
 
 (defn suoritus [o]
-  (->Suoritus (.komo o) (.tila o) (.oppija o)))
+  (->Suoritus (.komo o) (.tila o) (.henkiloOid o)))
 
 (defn todistus [o]
   (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (set (.suppressed o))))
