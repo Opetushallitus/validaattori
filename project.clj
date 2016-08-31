@@ -7,7 +7,7 @@
                  [org.clojure/clojurescript "0.0-3126"]]
   :source-paths ["src/clojure"]
   :java-source-paths ["src/java"]
-  :profiles     {:dev {:plugins [[com.cemerick/austin "0.1.6"]
+  :profiles     {:dev {:plugins [[com.cemerick/austin "0.1.6" :exclusions [org.clojure/clojurescript]]
                                  [lein-midje "3.1.1"]
                                  [lein-kibit "0.0.8"]
                                  [jonase/eastwood "0.2.1"]
