@@ -34,11 +34,11 @@
   (if
     (get todistus-el :eivalmistu)
     (po/->Todistus
-     (po/->Suoritus perusopetus-komo "KESKEYTYNYT" oppija)
+     (po/->Suoritus perusopetus-komo "KESKEYTYNYT" oppija "")
      []
      #{})
     (po/->Todistus
-     (po/->Suoritus perusopetus-komo "VALMIS" oppija)
+     (po/->Suoritus perusopetus-komo "VALMIS" oppija "")
      (arvosanat todistus-el)
      #{})))
 
