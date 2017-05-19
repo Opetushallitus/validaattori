@@ -17,12 +17,17 @@
   s)
 
 (defn todistus [s] (->Todistus
-                    (->Suoritus "1.2.246.562.13.62959769647" "VALMIS" (->Oppija "010101-123N" "Blomqvist" "Eetu") "Ei")
+                    (->Suoritus "1.2.246.562.13.62959769647" "VALMIS" (->Oppija "010101-123N" "Blomqvist" "Eetu") (->Yksilollistetty "Ei"))
                     (map #(->Arvosana (create-arvosana %1) 8 "" false) s)
                     #{}))
 
 (defn todistus-yksilollinen-alueittain [s] (->Todistus
-                    (->Suoritus "1.2.246.562.13.62959769647" "VALMIS" (->Oppija "010101-123N" "Blomqvist" "Eetu") "Alueittain")
+                    (->Suoritus "1.2.246.562.13.62959769647" "KESKEN" (->Oppija "010101-123N" "Blomqvist" "Eetu") (->Yksilollistetty "Alueittain"))
+                    []
+                    #{}))
+
+(defn todistus-yksilollinen-alueittain2 [s] (->Todistus
+                    (->Suoritus "1.2.246.562.13.62959769647" "VALMIS" (->Oppija "010101-123N" "Blomqvist" "Eetu") (->Yksilollistetty "Alueittain"))
                     []
                     #{}))
 
@@ -71,3 +76,6 @@
 
 (fact "todistus with Alueittain has no problems"
       (validate (todistus-yksilollinen-alueittain mandatory-subjects)) => [])
+
+(fact "todistus with Alueittain has no problems"
+      (validate (todistus-yksilollinen-alueittain2 mandatory-subjects)) => [])

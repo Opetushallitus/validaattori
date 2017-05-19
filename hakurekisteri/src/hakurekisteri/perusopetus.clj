@@ -13,7 +13,7 @@
 
 (defn yksilollistaminen-not-alueittain? [t]
   (not (= "Alueittain"
-     (get-in t [:suoritus :yksilollistaminen]))))
+     (get-in t [:suoritus :yksilollistetty :yksilollistaminen]))))
 
 (defn not-failed-perusopetus? [t]
   (and
@@ -82,6 +82,8 @@
 
 (defrecord Arvosana [aine arvio lisatieto valinnainen])
 
-(defrecord Suoritus [komo tila oppija yksilollistaminen])
+(defrecord Suoritus [komo tila oppija yksilollistetty])
+
+(defrecord Yksilollistetty [yksilollistaminen])
 
 (defrecord Oppija [hetu sukunimi kutsumanimi])
