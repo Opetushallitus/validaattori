@@ -1,4 +1,4 @@
-(defproject validator "0.1.0-SNAPSHOT"
+(defproject validator "0.1.1-SNAPSHOT"
   :description "data validation library"
   :url "https://github.com/Opetushallitus/validaattori"
   :license {:name "EUPL"

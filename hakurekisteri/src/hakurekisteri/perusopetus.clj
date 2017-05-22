@@ -3,7 +3,6 @@
             [clojure.string :refer [lower-case]]
             [validator.rules :refer [find-rules ruleset rule problems?]]))
 
-
 (defn perusopetus? [t]
   (= "1.2.246.562.13.62959769647"
      (get-in t [:suoritus :komo])))
@@ -12,9 +11,14 @@
   (not (= "KESKEYTYNYT"
      (get-in t [:suoritus :tila]))))
 
+(defn yksilollistaminen-not-alueittain? [t]
+  (not (= "Alueittain"
+     (get-in t [:suoritus :yksilollistetty :yksilollistaminen]))))
+
 (defn not-failed-perusopetus? [t]
   (and
    (perusopetus? t)
+   (yksilollistaminen-not-alueittain? t)
    (not-failed? t)))
 
 (defn perusopetus-rule [name & {:keys [applies validator]}]
@@ -78,6 +82,8 @@
 
 (defrecord Arvosana [aine arvio lisatieto valinnainen])
 
-(defrecord Suoritus [komo tila oppija])
+(defrecord Suoritus [komo tila oppija yksilollistetty])
+
+(defrecord Yksilollistetty [yksilollistaminen])
 
 (defrecord Oppija [hetu sukunimi kutsumanimi])

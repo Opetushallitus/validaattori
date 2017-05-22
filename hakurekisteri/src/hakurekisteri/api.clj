@@ -1,6 +1,6 @@
 (ns hakurekisteri.api
   (:require [validator.core :refer [validate Validatable]]
-            [hakurekisteri.perusopetus :refer [->Todistus ->Suoritus ->Arvosana ->Oppija]]))
+            [hakurekisteri.perusopetus :refer [->Todistus ->Suoritus ->Arvosana ->Oppija ->Yksilollistetty]]))
 
 
 (defn arvosana [o]
@@ -14,7 +14,7 @@
 
 
 (defn suoritus [o]
-  (->Suoritus (.komo o) (.tila o) (.henkiloOid o)))
+  (->Suoritus (.komo o) (.tila o) (.henkiloOid o) (->Yksilollistetty (.toString (.yksilollistaminen o)))))
 
 (defn todistus [o]
   (->Todistus (suoritus (.suoritus o)) (map arvosana (.arvosanas o)) (set (.suppressed o))))
