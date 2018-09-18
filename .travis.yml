@@ -1,0 +1,35 @@
+language: clojure
+
+lein: 2.5.1
+
+jdk:
+- oraclejdk8
+
+services:
+- docker
+
+cache:
+  directories:
+  - $HOME/.m2
+
+env:
+  global:
+  # ARTIFACTORY_USERNAME
+  - secure: "deAkK5vdiA5weehEdSjeMNOpOtrzsqWwHc1sl+K6oQc8+RyZ+7IYYc9qx4CSzZFB7KNNlCM9Bd9jMjtRKk0ZVX1N81XpeEeu2Ynrv+ILw1v27j4ZpzIr08/0sb4HiuQKsC5B7QbkknyE8kzq1SG65bkEG3aBiXgXcwOH+iRViSk="
+  # ARTIFACTORY_PASSWORD
+  - secure: "Y3BVl8P4bIE5+y858hdnv2rq7fso2s+7RQEMUUw16RWnwiNdWJdMO5Jx4X2TZLJhQ8wmcC7MEIxws919R11TFrALUI8JJhGYX8vy/BiEejTjy/noyOrSok1/rqDwupBKSYBJLfi8KvO/msOVyfEQETPRJXKiH0Q22/wsLvvN6G4="
+
+install:
+- git clone https://github.com/Opetushallitus/ci-tools.git
+- source ci-tools/common/setup-tools.sh
+- cp ci-tools/common/maven-settings.xml $HOME/.m2/settings.xml
+
+script:
+- lein with-profile +hakurekisteri cljsbuild once prod
+
+deploy:
+- provider: script
+  script: lein with-profile +hakurekisteri deploy
+  skip_cleanup: true
+  on:
+    branch: master

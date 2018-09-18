@@ -36,8 +36,8 @@
                                                                   :output-to "prod-js/hakurekisteri-validator.min.js"
                                                                   :optimizations :advanced
                                                                   :pretty-print false}}]}}}
-  :deploy-repositories {"snapshots" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-snapshot-local"}
-                        "releases" {:url "https://artifactory.oph.ware.fi/artifactory/oph-sade-release-local"}}
+  :deploy-repositories {"snapshots" {:url "https://artifactory.opintopolku.fi/artifactory/oph-sade-snapshot-local"}
+                        "releases" {:url "https://artifactory.opintopolku.fi/artifactory/oph-sade-release-local"}}
   :hooks [leiningen.dalap]
   :aliases {"hr" ["with-profile" "+hakurekisteri"]
             "hr-prod" ["hr" "cljsbuild" "once" "prod"]

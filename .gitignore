@@ -11,3 +11,4 @@ pom.xml.asc
 /gen-cljs
 /prod-js
 .idea/
+*.iml
