@@ -18,6 +18,10 @@ env:
   - secure: "deAkK5vdiA5weehEdSjeMNOpOtrzsqWwHc1sl+K6oQc8+RyZ+7IYYc9qx4CSzZFB7KNNlCM9Bd9jMjtRKk0ZVX1N81XpeEeu2Ynrv+ILw1v27j4ZpzIr08/0sb4HiuQKsC5B7QbkknyE8kzq1SG65bkEG3aBiXgXcwOH+iRViSk="
   # ARTIFACTORY_PASSWORD
   - secure: "Y3BVl8P4bIE5+y858hdnv2rq7fso2s+7RQEMUUw16RWnwiNdWJdMO5Jx4X2TZLJhQ8wmcC7MEIxws919R11TFrALUI8JJhGYX8vy/BiEejTjy/noyOrSok1/rqDwupBKSYBJLfi8KvO/msOVyfEQETPRJXKiH0Q22/wsLvvN6G4="
+  # LEIN_USERNAME
+  - secure: "hJG19iWb1rO5h3qDb6XzydEjk1AXX1eI4W7IUtW2cgOtwDIElvWt1Vs42UdixjqddukdxXOnPRgBSl0+CpctnGhEbIp35qb/ylYhIFPM3uqlPdKJejduELA/9yBoKuJXE54jjdTdzxNgAnyJ6m7y2dq/CA+ghAYLdhOfZfq0vec="
+  # LEIN_PASSWORD
+  - secure: "KOUsTXeAjBvVja0cpc9zyVg3ttM4eiREXz69DVFj3HLZ9ss0pZ+HuEqoY13tbzdIWDgCFxKUCIFpePGlwqas6RFQbb4n39sTkylDoqjm3uySlnn9QnVq+Jo2DJhcrBDjCdGI6H3ni8OpnYHAvipZhXUZP8vACzf8InESGflGZhc="
 
 install:
 - git clone https://github.com/Opetushallitus/ci-tools.git
