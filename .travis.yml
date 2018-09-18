@@ -26,6 +26,7 @@ install:
 
 script:
 - lein with-profile +hakurekisteri cljsbuild once prod
+- lein with-profile +hakurekisteri midje
 
 deploy:
 - provider: script
