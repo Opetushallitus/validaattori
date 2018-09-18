@@ -22,6 +22,7 @@ env:
 install:
 - git clone https://github.com/Opetushallitus/ci-tools.git
 - source ci-tools/common/setup-tools.sh
+- cp ci-tools/common/maven-settings.xml $HOME/.m2/settings.xml
 
 script:
 - lein with-profile +hakurekisteri cljsbuild once prod
