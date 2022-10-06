@@ -9,6 +9,6 @@
   "author": "Juha Paananen <juha.paananen@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "mustache": "^1"
+    "mustache": "^2.2.1"
   }
 }
