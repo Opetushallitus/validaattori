@@ -4,7 +4,7 @@
   <groupId>validator</groupId>
   <artifactId>validator</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.2.0-SNAPSHOT</version>
   <name>validator</name>
   <description>data validation library</description>
   <url>https://github.com/Opetushallitus/validaattori</url>
@@ -18,7 +18,7 @@
     <url>https://github.com/Opetushallitus/validaattori</url>
     <connection>scm:git:git://github.com/Opetushallitus/validaattori.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/Opetushallitus/validaattori.git</developerConnection>
-    <tag>d1d5858454b71448c7d542ef5d1ae39b57358dd4</tag>
+    <tag>6a38e9e185e301ea6c2d97c0db864d01e3359797</tag>
   </scm>
   <build>
     <sourceDirectory>src/clojure</sourceDirectory>
@@ -91,7 +91,7 @@
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>clojure</artifactId>
-      <version>1.6.0</version>
+      <version>1.9.0</version>
     </dependency>
     <dependency>
       <groupId>org.clojure</groupId>

@@ -1,9 +1,9 @@
-(defproject validator "0.1.1-SNAPSHOT"
+(defproject validator "0.2.0-SNAPSHOT"
   :description "data validation library"
   :url "https://github.com/Opetushallitus/validaattori"
   :license {:name "EUPL"
             :url "http://www.osor.eu/eupl/"}
-  :dependencies [[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "0.0-3126"]]
   :source-paths ["src/clojure"]
   :java-source-paths ["src/java"]
